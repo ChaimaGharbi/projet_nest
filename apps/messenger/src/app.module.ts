@@ -12,16 +12,16 @@ import { ClientProxyFactory, Transport } from '@nestjs/microservices';
       envFilePath: './.env',
     }),
 
-    /* SharedModule.registerRmq('AUTH_SERVICE', process.env.RABBITMQ_AUTH_QUEUE),
+    SharedModule.registerRmq('AUTH_SERVICE', process.env.RABBITMQ_AUTH_QUEUE),
     SharedModule.registerRmq(
       'PRESENCE_SERVICE',
       process.env.RABBITMQ_PRESENCE_QUEUE,
-    ),*/
+    ),
   ],
   controllers: [AppController],
   providers: [
     AppService,
-    {
+    /*{
       provide: 'AUTH_SERVICE',
       useFactory: (configService: ConfigService) => {
         const USER = configService.get('RABBITMQ_USER');
@@ -60,7 +60,7 @@ import { ClientProxyFactory, Transport } from '@nestjs/microservices';
         });
       },
       inject: [ConfigService],
-    },
+    },*/
   ],
 })
 export class AppModule {}
