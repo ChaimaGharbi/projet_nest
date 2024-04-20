@@ -1,0 +1,9 @@
+### GET auth
+GET http://localhost:4000/auth
+
+### POST auth
+POST http://localhost:4000/auth
+
+
+### GET presence
+GET http://localhost:4000/presence
