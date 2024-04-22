@@ -4,7 +4,10 @@ import { AuthService } from './auth.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
-import { dataSourceOptions } from './db/data-source';
+import { PostgresDBModule, SharedModule } from '@app/shared';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtGuard } from './jwt.guard';
+import { JwtStrategy } from './jwt.-strategy';
 
 @Module({
   imports: [
@@ -12,24 +15,22 @@ import { dataSourceOptions } from './db/data-source';
       isGlobal: true,
       envFilePath: './.env',
     }),
-    TypeOrmModule.forFeature([UserEntity]),
-    TypeOrmModule.forRootAsync({
+
+    JwtModule.registerAsync({
       imports: [ConfigModule],
-      inject: [ConfigService],
-      //   useFactory: (configService: ConfigService) => ({
-      //     type: 'postgres',
-      //     url: configService.get('POSTGRES_URI'),
-      //     autoLoadEntities: true,
-      //     synchronize: true,
-      //   }),
-      // }),
-      useFactory: () => ({
-        ...dataSourceOptions,
-        autoLoadEntities: true,
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRET'),
+        signOptions: {
+          expiresIn: '1h',
+        },
       }),
+      inject: [ConfigService],
     }),
+    SharedModule,
+    PostgresDBModule,
+    TypeOrmModule.forFeature([UserEntity]),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtGuard, JwtStrategy],
 })
 export class AuthModule {}
