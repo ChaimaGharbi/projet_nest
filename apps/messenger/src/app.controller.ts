@@ -1,5 +1,7 @@
 import { AuthGuard } from '@app/shared';
-import { Body, Controller, Get, Inject, Post, UseGuards } from '@nestjs/common';
+import { UserInterceptor } from '@app/shared/interceptors/user.interceptor';
+import { UserRequest } from '@app/shared/interfaces/user-request.interface';
+import { BadRequestException, Body, Controller, Get, Inject, Param, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
 @Controller()
@@ -17,6 +19,45 @@ export class AppController {
   @Post('auth')
   async postUser() {
     return this.authService.send({ cmd: 'post-user' }, {});
+  }
+  @UseGuards(AuthGuard)
+  @UseInterceptors(UserInterceptor)
+  @Post('add-friend/:friendId')
+  async addFriend(
+    @Req() req: UserRequest,
+    @Param('friendId') friendId: number,
+  ) {
+    if (!req?.user) {
+      throw new BadRequestException();
+    }
+
+    return this.authService.send(
+      {
+        cmd: 'add-friend',
+      },
+      {
+        userId: req.user.id,
+        friendId,
+      },
+    );
+  }
+
+  @UseGuards(AuthGuard)
+  @UseInterceptors(UserInterceptor)
+  @Get('get-friends')
+  async getFriends(@Req() req: UserRequest) {
+    if (!req?.user) {
+      throw new BadRequestException();
+    }
+
+    return this.authService.send(
+      {
+        cmd: 'get-friends',
+      },
+      {
+        userId: req.user.id,
+      },
+    );
   }
 
   @Get('presence')
@@ -56,4 +97,6 @@ export class AppController {
       },
     );
   }
+
+
 }

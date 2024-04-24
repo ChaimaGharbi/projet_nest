@@ -50,4 +50,54 @@ export class AuthController {
     this.sharedService.acknowledgeMessage(context);
     return this.authService.verifyJwt(payload.jwt);
   }
+
+  @MessagePattern({ cmd: 'get-user' })
+  async getUserById(
+    @Ctx() context: RmqContext,
+    @Payload() user: { id: number },
+  ) {
+    this.sharedService.acknowledgeMessage(context);
+
+    return this.authService.getUserById(user.id);
+  }
+
+  @MessagePattern({ cmd: 'decode-jwt' })
+  async decodeJwt(
+    @Ctx() context: RmqContext,
+    @Payload() payload: { jwt: string },
+  ) {
+    this.sharedService.acknowledgeMessage(context);
+
+    return this.authService.getUserFromHeader(payload.jwt);
+  }
+
+  @MessagePattern({ cmd: 'add-friend' })
+  async addFriend(
+    @Ctx() context: RmqContext,
+    @Payload() payload: { userId: number; friendId: number },
+  ) {
+    this.sharedService.acknowledgeMessage(context);
+
+    return this.authService.addFriend(payload.userId, payload.friendId);
+  }
+
+  @MessagePattern({ cmd: 'get-friends' })
+  async getFriends(
+    @Ctx() context: RmqContext,
+    @Payload() payload: { userId: number },
+  ) {
+    this.sharedService.acknowledgeMessage(context);
+
+    return this.authService.getFriends(payload.userId);
+  }
+
+  @MessagePattern({ cmd: 'get-friends-list' })
+  async getFriendsList(
+    @Ctx() context: RmqContext,
+    @Payload() payload: { userId: number },
+  ) {
+    this.sharedService.acknowledgeMessage(context);
+
+    return this.authService.getFriendsList(payload.userId);
+  }
 }

@@ -10,6 +10,8 @@ export * from './entities/friend-request.entity';
 export * from './entities/conversation.entity';
 export * from './entities/message.entity';
 // interfaces - user/shared
+export * from './interfaces/user-request.interface';
+export * from './interfaces/user-jwt.interface';
 export * from './interfaces/shared.service.interface';
 // interfaces - repository
 export * from './interfaces/users.repository.interface';
@@ -24,3 +26,5 @@ export * from './repositories/users.repository';
 export * from './repositories/friend-requests.repository';
 export * from './repositories/conversations.repository';
 export * from './repositories/messages.repository';
+// interceptors
+export * from './interceptors/user.interceptor';
