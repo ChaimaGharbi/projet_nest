@@ -1,19 +1,31 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UseInterceptors } from '@nestjs/common';
 import { PresenceService } from './presence.service';
 import { Ctx, MessagePattern, RmqContext } from '@nestjs/microservices';
 import { SharedService } from '@app/shared';
+import { CacheInterceptor } from '@nestjs/cache-manager';
+import { RedisService } from '@app/shared/services/redis.service';
 
 @Controller()
 export class PresenceController {
   constructor(
+    private readonly redisService: RedisService,
     private readonly presenceService: PresenceService,
     private readonly sharedService: SharedService,
   ) {}
 
   @MessagePattern({ cmd: 'get-presence' })
+  @UseInterceptors(CacheInterceptor)
   async getUser(@Ctx() context: RmqContext) {
     this.sharedService.acknowledgeMessage(context);
+    const cache = await this.redisService.get('presence');
+    if (cache) {
+      console.log('Getting from cache');
+      
+      return cache;
+    }
 
-    return this.presenceService.getHello();
+    const f = await this.presenceService.getHello();
+    this.redisService.set('presence', f);
+    return f;
   }
 }

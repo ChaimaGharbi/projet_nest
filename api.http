@@ -7,7 +7,7 @@ POST http://localhost:4000/auth
 
 ### GET presence
 GET http://localhost:4000/presence
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozLCJmaXJzdE5hbWUiOiJmZWRpMiIsImxhc3ROYW1lIjoiYWRlbCIsImVtYWlsIjoiZmVkaTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkNDllWkdhUjFMWVpZclpoZDJIcVNhT2xmeGZacWZWN0NVRHlIMVJ5b3FSV2lVNkJOL1dRQUsifSwiaWF0IjoxNzEzNjU0ODgzLCJleHAiOjE3MTM2NTg0ODN9.fgjjCeiURsnXRotfa75RSIkC7WvzZXBhp6egvCBbecE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJmZWRpMiIsImxhc3ROYW1lIjoiYWRlbCIsImVtYWlsIjoiZmVkaTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkcnlSNzJOamcxNUdZRHdkaWQ0L3lXZWRMY0xwRUROVWNLWXVqdG5hM2ZReVNIOHRSWTBKTkcifSwiaWF0IjoxNzE0MDc3Mzc4LCJleHAiOjE3MTQwODA5Nzh9.rU-uiHwYzLXXvtxmUAus-WcGJzSWEzx2MivWG7AM5F8
 
 
 ### REGISTER
@@ -15,9 +15,9 @@ POST http://localhost:4000/auth/register
 Content-Type:  application/json
 
 {
-    "firstName": "fedi2",
+    "firstName": "fedi3",
     "lastName": "adel",
-    "email" : "fedi2@gmail.com",
+    "email" : "fedi3@gmail.com",
     "password" : "password"
 }
 

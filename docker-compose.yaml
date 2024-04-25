@@ -74,5 +74,15 @@ services:
       - .env
     ports:
       - '15432:80'
+  redis:
+    image: redis
+    command: /bin/sh -c 'redis-server --requirepass $$REDIS_PASS'
+    ports:
+      - '6379:6379'
+    volumes:
+      - /redis/data:/data
+    env_file:
+      - .env
+  
 
   

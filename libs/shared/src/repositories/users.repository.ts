@@ -5,7 +5,7 @@ import { BaseAbstractRepository } from './base/base.abstract.repository';
 import { UserRepositoryInterface } from '../interfaces/users.repository.interface';
 import { UserEntity } from '../entities/user.entity';
 
-@Injectable()
+@Injectable() 
 export class UsersRepository
   extends BaseAbstractRepository<UserEntity>
   implements UserRepositoryInterface
