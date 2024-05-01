@@ -30,6 +30,8 @@ services:
     build:
       context: ./
       dockerfile: ./apps/presence/Dockerfile
+    ports:
+      - '6000:6000'
     env_file:
       - .env
     depends_on:
@@ -57,6 +59,24 @@ services:
       - /usr/src/app/node_modules
     command: npm run start:dev messenger
 
+  chat:
+    build:
+      context: ./
+      dockerfile: ./apps/chat/Dockerfile
+    ports:
+      - '7000:7000'
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+      - postgres
+      - redis
+      - presence
+    volumes:
+      - .:/usr/src/app # any change to base folder should be reflected
+      - /usr/src/app/node_modules
+    command: npm run start:dev chat # overrides CMD from dockerfile
+
   postgres:
     image: postgres
     env_file:
@@ -83,6 +103,3 @@ services:
       - /redis/data:/data
     env_file:
       - .env
-  
-
-  

@@ -1,4 +1,3 @@
-
 import { BaseInterfaceRepository } from '../repositories/base/base.interface.repository';
 
 import { ConversationEntity } from '../entities/conversation.entity';

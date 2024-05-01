@@ -29,3 +29,4 @@ export * from './repositories/messages.repository';
 export * from './repositories/friend-requests.repository';
 // interceptors
 export * from './interceptors/user.interceptor';
+export * from './services/redis.service';

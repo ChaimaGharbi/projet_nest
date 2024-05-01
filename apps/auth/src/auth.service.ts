@@ -1,14 +1,12 @@
 import {
-  ConflictException,
-  Injectable,
-  Inject,
-  UnauthorizedException,
   BadRequestException,
+  ConflictException,
+  Inject,
+  Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { NewUserDTO } from './dtos/new-user.dto';
 import * as bcrypt from 'bcrypt';
+import { NewUserDTO } from './dtos/new-user.dto';
 
 import {
   FriendRequestEntity,
@@ -18,10 +16,9 @@ import {
   UserRepositoryInterface,
 } from '@app/shared';
 
+import { JwtService } from '@nestjs/jwt';
 import { ExistingUserDTO } from './dtos/existing-user.dto';
 import { AuthServiceInterface } from './interfaces/auth.service.interface';
-import { JwtService } from '@nestjs/jwt';
-import { use } from 'passport';
 
 @Injectable()
 export class AuthService implements AuthServiceInterface {
